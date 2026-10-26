@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17153b">
+<title>GrammarPath | Learn English Grammar</title>
+
+<style>
+:root {
+  --primary: #6558e8;
+  --primary-light: #efedff;
+  --bg: #f6f7fc;
+  --card: #ffffff;
+  --text: #20243a;
+  --muted: #747b91;
+  --border: #e5e7f0;
+  --green: #0d956a;
+  --red: #d94155;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.topbar {
+  height: 70px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand { font-size: 21px; font-weight: 850; }
+.brand span { color: var(--primary); }
+.topbar button, .btn {
+  border: 0;
+  border-radius: 10px;
+  background: var(--primary);
+  color: white;
+  padding: 10px 16px;
+  font-weight: 700;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 245px minmax(0, 1fr);
+  max-width: 1500px;
+  margin: auto;
+}
+.sidebar {
+  min-height: calc(100vh - 70px);
+  padding: 24px 16px;
+  background: #fff;
+  border-right: 1px solid var(--border);
+}
+.side-label {
+  color: #969bb0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 14px 10px;
+}
+.nav {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #535a71;
+  text-align: left;
+  font-weight: 700;
+  margin: 4px 0;
+}
+.nav.active, .nav:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+.main { padding: 34px; min-width: 0; }
+.view { display: none; }
+.view.active { display: block; }
+.hero {
+  padding: 42px;
+  color: white;
+  border-radius: 22px;
+  background: linear-gradient(120deg, #17153b, #4940a7, #8370f4);
+}
+.hero small {
+  color: #d9d4ff;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.hero h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.15;
+  margin: 12px 0;
+}
+.hero p { color: #e4e2ff; max-width: 600px; }
+.hero button {
+  border: 0;
+  border-radius: 10px;
+  background: white;
+  color: #39318b;
+  font-weight: 800;
+  padding: 12px 18px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 22px 0 32px;
+}
+.stat, .card, .lesson-box {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 20px;
+}
+.stat strong { display: block; font-size: 27px; }
+.stat span { color: var(--muted); font-size: 13px; }
+.heading {
+  margin: 28px 0 14px;
+}
+.heading h2 { margin: 0; }
+.heading p { margin: 3px 0; color: var(--muted); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.card { cursor: pointer; transition: .2s; }
+.card:hover { transform: translateY(-3px); border-color: #c5beff; }
+.emoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--primary-light);
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  margin-bottom: 12px;
+}
+.card h3 { margin: 0 0 5px; font-size: 17px; }
+.card p { color: var(--muted); font-size: 14px; margin: 0; }
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 15px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.tag {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 750;
+}
+.page-title { font-size: 34px; margin: 0; letter-spacing: -1px; }
+.muted { color: var(--muted); }
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+.toolbar input, .toolbar select {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  color: var(--text);
+}
+.toolbar input { flex: 1; min-width: 190px; }
+.lesson-list { display: grid; gap: 12px; }
+.lesson-item {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 17px;
+}
+.lesson-number {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: grid;
+  place-items: center;
+  font-weight: 850;
+}
+.lesson-info { flex: 1; min-width: 0; }
+.lesson-info h3 { margin: 0; }
+.lesson-info p { margin: 4px 0; color: var(--muted); font-size: 14px; }
+.lesson-item button {
+  margin-top: 10px;
+  border: 0;
+  background: var(--primary);
+  color: white;
+  border-radius: 9px;
+  padding: 9px 13px;
+  font-weight: 750;
+}
+.lesson-header {
+  padding: 25px;
+  border: 1px solid #dedbff;
+  background: linear-gradient(120deg, #efedff, #fff);
+  border-radius: 18px;
+  margin-bottom: 15px;
+}
+.lesson-header h1 { margin: 8px 0; line-height: 1.25; }
+.lesson-box { margin: 14px 0; }
+.lesson-box h2 { margin-top: 0; font-size: 21px; }
+.bangla {
+  background: #f5f3ff;
+  border-left: 4px solid var(--primary);
+  border-radius: 0 10px 10px 0;
+  padding: 14px;
+  margin-top: 15px;
+}
+.example {
+  padding: 13px 15px;
+  border-radius: 10px;
+  background: #f8f9fc;
+  border: 1px solid var(--border);
+  margin: 9px 0;
+}
+.quiz-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px 0;
+}
+.quiz-option:hover { border-color: var(--primary); }
+.quiz-option:disabled { cursor: default; }
+.correct { color: var(--green); font-weight: 800; }
+.wrong { color: var(--red); font-weight: 800; }
+.feedback { margin: 12px 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+.secondary {
+  background: white;
+  color: var(--primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 750;
+}
+.back {
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font-weight: 800;
+  padding: 0;
+  margin-bottom: 15px;
+}
+.progress-track {
+  height: 9px;
+  background: #e9eaf2;
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--primary), #a08bff);
+}
+.mobile-nav { display: none; }
+.footer {
+  text-align: center;
+  padding: 30px 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .layout { grid-template-columns: 210px minmax(0, 1fr); }
+  .main { padding: 23px; }
+}
+@media (max-width: 680px) {
+  .topbar { height: 60px; padding: 0 14px; }
+  .brand { font-size: 18px; }
+  .topbar button { padding: 8px 10px; font-size: 12px; }
+  .layout { display: block; }
+  .sidebar { display: none; }
+  .main { padding: 17px 13px 90px; }
+  .hero { padding: 27px 21px; }
+  .hero h1 { font-size: 32px; }
+  .stats { gap: 8px; }
+  .stat { padding: 12px; }
+  .stat strong { font-size: 22px; }
+  .stat span { font-size: 11px; }
+  .grid { grid-template-columns: 1fr; }
+  .page-title { font-size: 29px; }
+  .mobile-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: fixed;
+    z-index: 20;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 8px 3px max(8px, env(safe-area-inset-bottom));
+  }
+  .mobile-nav button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 750;
+    padding: 5px 0;
+  }
+  .mobile-nav button.active { color: var(--primary); }
+  .lesson-item { padding: 13px; }
+  .lesson-box { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="brand">📘 Grammar<span>Path</span></div>
+  <button onclick="showView('lessons')">Start learning →</button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="side-label">YOUR CLASSROOM</div>
+    <button class="nav active" data-view="home">🏠 Dashboard</button>
+    <button class="nav" data-view="lessons">📚 All lessons</button>
+    <button class="nav" data-view="practice">✍️ Practice quiz</button>
+    <button class="nav" data-view="progress">📈 My progress</button>
+
+    <div class="side-label">COURSE PROGRESS</div>
+    <div class="card">
+      <strong id="sideCount">0 lessons completed</strong>
+      <div class="progress-track">
+        <div class="progress-fill" id="sideFill"></div>
+      </div>
+      <small class="muted" id="sidePercent">0% complete</small>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <small>YOUR ENGLISH LEARNING JOURNEY</small>
+        <h1>Understand English.<br>Speak with confidence.</h1>
+        <p>Learn grammar from the basics to advanced topics with simple Bangla explanations, real examples and interactive quizzes.</p>
+        <button onclick="showView('lessons')">Explore all lessons →</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><strong id="homeCompleted">0</strong><span>Completed lessons</span></div>
+        <div class="stat"><strong id="homeTotal">40</strong><span>Grammar topics</span></div>
+        <div class="stat"><strong id="homePercent">0%</strong><span>Course progress</span></div>
+      </div>
+
+      <div class="heading">
+        <h2>Start learning</h2>
+        <p>Choose a topic and study at your own pace.</p>
+      </div>
+      <div class="grid" id="featured"></div>
+
+      <div class="heading">
+        <h2>Your learning roadmap</h2>
+        <p>Move from the foundations to advanced English grammar.</p>
+      </div>
+      <div class="grid">
+        <div class="card" onclick="filterLevel('Beginner')">
+          <div class="emoji">🌱</div>
+          <h3>Beginner</h3>
+          <p>Word classes, sentences, nouns, articles and basic grammar.</p>
+        </div>
+        <div class="card" onclick="filterLevel('Intermediate')">
+          <div class="emoji">🚀</div>
+          <h3>Intermediate</h3>
+          <p>Tenses, modals, voice, narration and sentence structures.</p>
+        </div>
+        <div class="card" onclick="filterLevel('Advanced')">
+          <div class="emoji">🏆</div>
+          <h3>Advanced</h3>
+          <p>Clauses, conditionals, transformations and advanced usage.</p>
+        </div>
+      </div>
+      <div class="footer">GrammarPath · Learn a little every day.</div>
+    </section>
+
+    <section class="view" id="view-lessons">
+      <h1 class="page-title">All grammar lessons</h1>
+      <p class="muted">Explore the syllabus from beginner to advanced level.</p>
+
+      <div class="toolbar">
+        <input id="search" placeholder="Search grammar topics..." aria-label="Search lessons">
+        <select id="level" aria-label="Filter level">
+          <option value="All">All levels</option>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+        </select>
+        <select id="status" aria-label="Filter completion">
+          <option value="All">All lessons</option>
+          <option value="Incomplete">Not completed</option>
+          <option value="Complete">Completed</option>
+        </select>
+      </div>
+      <div class="lesson-list" id="lessonList"></div>
+    </section>
+
+    <section class="view" id="view-detail">
+      <button class="back" onclick="showView('lessons')">← Back to all lessons</button>
+      <div id="detail"></div>
+    </section>
+
+    <section class="view" id="view-practice">
+      <h1 class="page-title">Practice quiz</h1>
+      <p class="muted">Test your grammar knowledge and learn from each answer.</p>
+      <div class="lesson-box" id="practiceBox"></div>
+    </section>
+
+    <section class="view" id="view-progress">
+      <h1 class="page-title">My learning progress</h1>
+      <p class="muted">Every completed lesson is a step forward.</p>
+      <div class="stats">
+        <div class="stat"><strong id="progressCount">0</strong><span>Lessons completed</span></div>
+        <div class="stat"><strong id="progressPercent">0%</strong><span>Course progress</span></div>
+        <div class="stat"><strong id="bestScore">0</strong><span>Best quiz score</span></div>
+      </div>
+      <div class="lesson-box">
+        <h2>Course completion</h2>
+        <div class="progress-track" style="height:13px">
+          <div class="progress-fill" id="bigFill"></div>
+        </div>
+        <p id="progressText" class="muted">Start your first lesson!</p>
+        <button class="btn" onclick="showView('lessons')">Continue learning</button>
+      </div>
+      <div class="heading"><h2>Completed lessons</h2></div>
+      <div class="lesson-list" id="completedList"></div>
+      <div class="actions">
+        <button class="secondary" onclick="resetProgress()">Reset saved progress</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="mobile-nav">
+  <button class="active" data-view="home">🏠<br>Home</button>
+  <button data-view="lessons">📚<br>Lessons</button>
+  <button data-view="practice">✍️<br>Practice</button>
+  <button data-view="progress">📈<br>Progress</button>
+</nav>
+
+<script>
+/*
+  GrammarPath
+  One-file HTML/CSS/JavaScript learning project.
+  Lesson completion and quiz scores are stored locally.
+*/
+
+const lessons = [
+{
+title:"Parts of Speech",level:"Beginner",emoji:"🧩",
+desc:"Learn the eight main types of words.",
+sections:[
+["What are parts of speech?","Words have different jobs in a sentence. Their job determines their part of speech.","বাংলায়: বাক্যে শব্দের কাজ অনুযায়ী শব্দকে বিভিন্ন শ্রেণিতে ভাগ করা হয়।"],
+["The eight types","Noun names a person, place, thing or idea. Pronoun replaces a noun. Verb shows action or state. Adjective describes a noun. Adverb describes a verb, adjective or adverb. Preposition shows relationships. Conjunction joins words or clauses. Interjection expresses emotion.","Noun = নাম; Pronoun = নামের বদলে; Verb = কাজ; Adjective = গুণ; Adverb = কাজ কীভাবে হয়; Preposition = সম্পর্ক; Conjunction = সংযোগ; Interjection = আবেগ।"],
+["Examples","<b>Noun:</b> Rina reads a book.<br><b>Pronoun:</b> She is kind.<br><b>Verb:</b> Birds fly.<br><b>Adjective:</b> A blue car.<br><b>Adverb:</b> He runs quickly.<br><b>Preposition:</b> The cat is under the table.<br><b>Conjunction:</b> Tea and coffee.<br><b>Interjection:</b> Wow!","একটি শব্দ বাক্যে কী কাজ করছে, তা খেয়াল করে তার part of speech চেনো।"]
+],q:"In “The small bird sings beautifully,” which word is an adjective?",o:["sings","small","beautifully","bird"],a:1,why:"Small describes the noun bird, so it is an adjective."
+},
+{
+title:"Sentence Structure",level:"Beginner",emoji:"🧱",
+desc:"Build clear English sentences.",
+sections:[
+["What is a sentence?","A sentence expresses a complete thought. It normally begins with a capital letter and ends with suitable punctuation.","বাংলায়: সম্পূর্ণ অর্থ প্রকাশ করে এমন শব্দসমষ্টিকে sentence বলে।"],
+["Basic word order","A common English pattern is Subject + Verb + Object: “I read books.” Other patterns include “Birds fly” and “She is happy.”","Subject = কে; Verb = কী করে; Object = কাকে বা কী। ইংরেজিতে শব্দের ক্রম গুরুত্বপূর্ণ।"],
+["Examples","Correct: She likes music. Incorrect: Likes she music. Correct: They play football after school.","বাংলায় ভাব ঠিক থাকলেও ইংরেজিতে শব্দের সঠিক order অনুসরণ করতে হয়।"]
+],q:"Choose the correct sentence.",o:["Likes she music.","She likes music.","Music likes she.","She music likes."],a:1,why:"The usual word order is Subject + Verb + Object."
+},
+{
+title:"Nouns",level:"Beginner",emoji:"🏷️",
+desc:"Learn common, proper, abstract and countable nouns.",
+sections:[
+["Definition","A noun names a person, place, thing or idea: teacher, Dhaka, phone, honesty.","ব্যক্তি, স্থান, বস্তু বা ভাবের নামকে noun বলে।"],
+["Types of nouns","Common: city. Proper: Dhaka. Concrete: table. Abstract: courage. Countable: apple. Uncountable: water, advice, information.","Proper noun-এর প্রথম অক্ষর capital হয়। Advice এবং information সাধারণত uncountable।"],
+["Using nouns","I have two books. We need some water. Her advice was helpful.","Countable noun-এর সঙ্গে many ব্যবহার করা যায়; uncountable noun-এর সঙ্গে much ব্যবহার করা যায়।"]
+],q:"Which is normally an uncountable noun?",o:["Chair","Advice","Pencil","Student"],a:1,why:"Say “some advice” or “a piece of advice,” not “an advice.”"
+},
+{
+title:"Pronouns",level:"Beginner",emoji:"👤",
+desc:"Replace nouns with the correct pronouns.",
+sections:[
+["Definition","Pronouns replace nouns to avoid repetition: “Mina is here. She is happy.”","Noun বারবার না লিখে pronoun ব্যবহার করা হয়।"],
+["Subject and object","Subject: I, he, she, we, they. Object: me, him, her, us, them. Example: “She called me.”","Subject কাজ করে; object কাজের প্রভাব গ্রহণ করে।"],
+["Possessives","My book is new. This book is mine. Their house is large. The house is theirs.","My, your, their-এর পরে noun থাকে। Mine, yours, theirs noun ছাড়াই ব্যবহৃত হয়।"]
+],q:"Choose the correct sentence.",o:["Her is my friend.","I called she.","They invited us.","This is her's."],a:2,why:"Us is the correct object pronoun after invited."
+},
+{
+title:"Articles: A, An, The",level:"Beginner",emoji:"🔤",
+desc:"Use articles correctly with nouns.",
+sections:[
+["A and an","Use a/an with a singular countable noun when it is not specific. Use a before a consonant sound and an before a vowel sound.","Sound খেয়াল করো: a book, an apple, a university, an hour।"],
+["The","Use the when a particular thing is known or specific: “I saw a dog. The dog was black.”","নির্দিষ্ট ব্যক্তি বা বস্তু বোঝালে the ব্যবহার হয়।"],
+["No article","General plural and uncountable nouns often need no article: “Books are useful.” “Water is important.”","সাধারণভাবে plural বা uncountable noun বোঝালে article না-ও লাগতে পারে।"]
+],q:"Choose the correct phrase.",o:["an university","a hour","an hour","an book"],a:2,why:"Hour begins with a vowel sound because its h is silent."
+},
+{
+title:"Adjectives",level:"Beginner",emoji:"🎨",
+desc:"Describe people, places and things.",
+sections:[
+["Definition","An adjective describes a noun or pronoun: a tall building, a beautiful flower, a difficult question.","Adjective noun-এর গুণ, অবস্থা বা বৈশিষ্ট্য বোঝায়।"],
+["Position","An adjective often comes before a noun: “a red car.” It can also follow a linking verb: “The car is red.”","Noun-এর আগে বা linking verb-এর পরে adjective আসতে পারে।"],
+["Order and examples","We often say “a beautiful small wooden box.” In natural English, opinion adjectives often come before size, age, colour and material.","একাধিক adjective ব্যবহার করলে স্বাভাবিক adjective order শেখার চেষ্টা করো।"]
+],q:"Which word is the adjective in “a beautiful garden”?",o:["a","beautiful","garden","the"],a:1,why:"Beautiful describes the noun garden."
+},
+{
+title:"Adverbs",level:"Beginner",emoji:"💨",
+desc:"Describe how, when, where or how often something happens.",
+sections:[
+["Definition","Adverbs can describe verbs, adjectives and other adverbs: speaks clearly, very tall, quite slowly.","Adverb কাজ কীভাবে, কখন, কোথায় বা কতটা হয় তা বোঝাতে পারে।"],
+["Common forms","Many adverbs end in -ly: slowly, carefully, beautifully. But not all do: fast, well, often.","সব adverb-এর শেষে -ly থাকে না।"],
+["Adjective or adverb?","She is a careful driver. She drives carefully. Good is an adjective; well often describes an action.","Noun-কে describe করলে adjective; action-কে describe করলে অনেক সময় adverb হয়।"]
+],q:"Complete: “He drives ___.”",o:["careful","carefully","carefulness","care"],a:1,why:"Carefully describes how he drives."
+},
+{
+title:"Prepositions",level:"Beginner",emoji:"📍",
+desc:"Learn prepositions of time, place and movement.",
+sections:[
+["Time","In July, in 2026; on Monday, on 5 May; at 7:30. These are common patterns.","In = মাস/বছর, on = দিন/তারিখ, at = নির্দিষ্ট সময়।"],
+["Place","In a room, in Bangladesh; on the table; at the station. Context can affect the choice.","In = কোনো কিছুর মধ্যে, on = পৃষ্ঠের ওপর, at = নির্দিষ্ট point।"],
+["Common combinations","Interested in, good at, afraid of, depend on, listen to.","অনেক preposition নির্দিষ্ট শব্দের সঙ্গে phrase হিসেবে শিখতে হয়।"]
+],q:"My class starts ___ 9:00.",o:["in","on","at","under"],a:2,why:"At is used for an exact clock time."
+},
+{
+title:"Conjunctions",level:"Beginner",emoji:"🔗",
+desc:"Join words and ideas.",
+sections:[
+["Coordinating conjunctions","FANBOYS: for, and, nor, but, or, yet, so. Example: “I was tired, but I continued.”","একই গুরুত্বের word বা clause যুক্ত করতে and, but, or, so ইত্যাদি ব্যবহৃত হয়।"],
+["Subordinating conjunctions","Because gives a reason; although shows contrast; if introduces a condition; when refers to time.","Because = কারণ, although = যদিও, if = যদি, when = যখন।"],
+["Sentence examples","“I stayed home because it rained.” “Although I was tired, I finished my work.”","Dependent clause-এর সঙ্গে প্রয়োজন অনুযায়ী main clause যোগ করো।"]
+],q:"I was hungry, ___ I made a sandwich.",o:["so","although","unless","because of"],a:0,why:"So introduces the result of being hungry."
+},
+{
+title:"Interjections",level:"Beginner",emoji:"🎉",
+desc:"Express sudden feelings and reactions.",
+sections:[
+["Definition","Interjections express emotions or reactions: wow, oh, ouch, hooray, alas.","হঠাৎ আবেগ বা প্রতিক্রিয়া প্রকাশকারী শব্দকে interjection বলে।"],
+["Punctuation","“Wow! That is amazing.” “Oh, I understand.” Strong feelings often use an exclamation mark.","জোরালো আবেগ বোঝাতে exclamation mark ব্যবহার করা যায়।"],
+["Use naturally","Use interjections sparingly in formal writing. They are more common in conversation and informal writing.","Formal writing-এ অপ্রয়োজনীয় interjection এড়িয়ে চলো।"]
+],q:"Which is an interjection?",o:["Quickly","Wow!","Under","Because"],a:1,why:"Wow expresses a reaction or emotion."
+},
+{
+title:"Present Simple Tense",level:"Intermediate",emoji:"☀️",
+desc:"Talk about habits, routines and facts.",
+sections:[
+["Uses","Use present simple for habits, routines and general truths: “I study every day.” “Water boils at 100°C at standard atmospheric pressure.”","অভ্যাস, নিয়মিত কাজ ও সাধারণ সত্য বোঝাতে present simple ব্যবহৃত হয়।"],
+["Form","I/you/we/they + base verb. He/she/it + verb-s/es. “She works.” “They play.”","He/she/it হলে affirmative বাক্যে সাধারণত s/es যোগ হয়।"],
+["Negative and questions","She does not work here. Do they live nearby? Does he speak English?","Does-এর পরে verb-এর base form হয়: “Does he play?”"]
+],q:"Choose the correct sentence.",o:["He go to school.","He goes to school.","He going school.","He does goes."],a:1,why:"Third-person singular takes -s/-es in present simple."
+},
+{
+title:"Present Continuous Tense",level:"Intermediate",emoji:"⏳",
+desc:"Describe actions happening now or temporarily.",
+sections:[
+["Form","Subject + am/is/are + verb-ing: “I am reading.” “They are playing.”","এখন চলমান কাজ বোঝাতে am/is/are + verb-ing ব্যবহার হয়।"],
+["Negative and questions","She is not sleeping. Are they working? What are you doing?","Negative-এ not বসে; প্রশ্নে am/is/are subject-এর আগে আসে।"],
+["Common mistakes","Say “I know the answer,” not normally “I am knowing the answer.” State verbs such as know and believe are not usually continuous.","Know, believe-এর মতো state verb সাধারণত continuous form-এ ব্যবহার হয় না।"]
+],q:"Look! The children ___ outside.",o:["play","plays","are playing","played"],a:2,why:"The action is happening now."
+},
+{
+title:"Present Perfect Tense",level:"Intermediate",emoji:"🔄",
+desc:"Connect past events with the present.",
+sections:[
+["Form","Subject + have/has + past participle: “I have finished.” “She has arrived.”","Have/has + verb-এর third form ব্যবহার হয়।"],
+["Uses","Use it for experiences, recent results and situations continuing to now: “I have visited Sylhet.”","অভিজ্ঞতা বা বর্তমানের সঙ্গে সম্পর্কিত অতীতের কাজ বোঝাতে ব্যবহৃত হয়।"],
+["Since and for","Since 2022; for four years. “I have lived here for four years.” Use past simple with a finished past time: “I saw him yesterday.”","Since = কখন থেকে; for = কত সময় ধরে।"]
+],q:"She has lived here ___ 2021.",o:["for","since","at","during"],a:1,why:"Since is used with a starting point in time."
+},
+{
+title:"Present Perfect Continuous",level:"Intermediate",emoji:"⌛",
+desc:"Describe an activity continuing over a period of time.",
+sections:[
+["Form","Subject + have/has been + verb-ing: “I have been studying for two hours.”","Have/has been + verb-ing দিয়ে কাজ কতক্ষণ ধরে চলছে বোঝানো হয়।"],
+["Since and for","“She has been working since morning.” “They have been waiting for thirty minutes.”","Starting point-এর জন্য since এবং duration-এর জন্য for ব্যবহৃত হয়।"],
+["Compare","“I have read the book” focuses on completion or result. “I have been reading the book” focuses on the activity.","Present perfect result-এ জোর দিতে পারে; continuous চলমান activity-তে জোর দেয়।"]
+],q:"I ___ English for two hours.",o:["study","have been studying","am study","studied tomorrow"],a:1,why:"Have been studying describes an activity continuing over a duration."
+},
+{
+title:"Past Simple Tense",level:"Intermediate",emoji:"🕰️",
+desc:"Talk about completed past events.",
+sections:[
+["Use","Use past simple for finished past actions: “We visited Cox’s Bazar last year.”","অতীতে শেষ হয়ে যাওয়া কাজ বোঝাতে past simple ব্যবহৃত হয়।"],
+["Verb forms","Regular: work → worked. Irregular: go → went, see → saw, buy → bought.","Regular verb-এ সাধারণত ed যোগ হয়; irregular verb আলাদা করে শিখতে হয়।"],
+["Questions and negatives","Did you go? I did not go. After did/did not, use the base form.","Did-এর পরে went নয়, go হবে।"]
+],q:"Choose the correct sentence.",o:["Did you went home?","I didn't saw him.","We visited them yesterday.","She goed there."],a:2,why:"Visited is the correct past simple form."
+},
+{
+title:"Past Continuous Tense",level:"Intermediate",emoji:"🌧️",
+desc:"Describe an action in progress at a past time.",
+sections:[
+["Form","Subject + was/were + verb-ing: “I was studying at 8 pm.”","অতীতের নির্দিষ্ট সময়ে কাজ চলছিল বোঝাতে was/were + verb-ing ব্যবহার হয়।"],
+["Interrupted actions","“I was walking when it started to rain.” The ongoing action uses past continuous; the interrupting event often uses past simple.","একটি কাজ চলার মধ্যে আরেকটি ঘটনা ঘটলে এভাবে tense ব্যবহার করা যায়।"],
+["Two ongoing actions","“While I was cooking, my brother was setting the table.”","একই সময়ে দুটি চলমান কাজ বোঝাতেও past continuous ব্যবহার হয়।"]
+],q:"I ___ TV when the lights went out.",o:["watched","was watching","am watching","watch"],a:1,why:"Watching was in progress when the lights went out."
+},
+{
+title:"Past Perfect Tense",level:"Intermediate",emoji:"⏪",
+desc:"Show which past event happened first.",
+sections:[
+["Form","Subject + had + past participle: “She had left.”","অতীতের কোনো ঘটনার আগেই আরেকটি কাজ শেষ হয়েছিল বোঝাতে had + V3 ব্যবহৃত হয়।"],
+["Order of events","“The train had left before we arrived.” The train left first; we arrived later.","অতীতের দুটি ঘটনার মধ্যে আগে ঘটে যাওয়া কাজটি বোঝাতে past perfect ব্যবহার করা যায়।"],
+["Questions","Had you finished when the teacher arrived? They had not met before.","Question: Had + subject + V3? Negative: had not + V3।"]
+],q:"By the time we arrived, the show ___.",o:["starts","has started","had started","will start"],a:2,why:"The show started before the later past event."
+},
+{
+title:"Past Perfect Continuous",level:"Advanced",emoji:"🧭",
+desc:"Show how long an activity had continued before a past event.",
+sections:[
+["Form","Subject + had been + verb-ing: “I had been waiting for an hour when she arrived.”","অতীতের কোনো ঘটনার আগে কতক্ষণ ধরে কাজ চলছিল তা বোঝাতে ব্যবহৃত হয়।"],
+["Duration","“They had been travelling for days before they reached the village.”","অতীতের আরেকটি ঘটনার আগ পর্যন্ত activity-এর duration বোঝানো হয়।"],
+["Compare","Past perfect often focuses on a completed result; past perfect continuous emphasizes duration or activity.","Had finished ফলাফল বোঝাতে পারে; had been working কাজ চলার সময়কে গুরুত্ব দেয়।"]
+],q:"He was tired because he ___ all day.",o:["works","had been working","will work","is work"],a:1,why:"Had been working explains the ongoing activity before the past state."
+},
+{
+title:"Future Simple: Will",level:"Intermediate",emoji:"🔮",
+desc:"Make predictions, promises and instant decisions.",
+sections:[
+["Form","Subject + will + base verb: “I will help you.” Negative: will not. Question: Will you come?","Will-এর পরে verb-এর base form বসে।"],
+["Uses","Use will for promises, offers, predictions and decisions made at the moment of speaking.","Promise, offer, prediction বা তাৎক্ষণিক সিদ্ধান্তে will ব্যবহার হয়।"],
+["Examples","“I think it will rain.” “I will call you later.” “Okay, I will do it.”","Context অনুযায়ী will-এর অর্থ বুঝতে হবে।"]
+],q:"The phone is ringing. I ___ answer it.",o:["will","was","have","did"],a:0,why:"Will is natural for a decision made at that moment."
+},
+{
+title:"Future Continuous",level:"Advanced",emoji:"🛫",
+desc:"Describe an action that will be in progress in the future.",
+sections:[
+["Form","Subject + will be + verb-ing: “At 8 pm, I will be studying.”","ভবিষ্যতের নির্দিষ্ট সময়ে কাজ চলতে থাকবে বোঝায়।"],
+["Future time","“This time tomorrow, we will be flying to Dhaka.”","Future time expression-এর সঙ্গে এই tense প্রায়ই ব্যবহৃত হয়।"],
+["Polite questions","“Will you be using the computer this evening?” can sound less direct than asking someone to use it.","কখনো ভবিষ্যতের পরিকল্পনা সম্পর্কে ভদ্রভাবে জানতে ব্যবহার করা হয়।"]
+],q:"At 9 tonight, I ___ for my exam.",o:["will be studying","studied","have studied yesterday","am study"],a:0,why:"Will be studying describes an action in progress at a future time."
+},
+{
+title:"Future Perfect",level:"Advanced",emoji:"🏁",
+desc:"Describe something that will be completed before a future time.",
+sections:[
+["Form","Subject + will have + past participle: “I will have finished by Friday.”","ভবিষ্যতের নির্দিষ্ট সময়ের আগে কাজ শেষ হয়ে যাবে বোঝায়।"],
+["By + time","“By next year, she will have graduated.” By identifies the deadline.","By tomorrow, by Friday, by 2030-এর মতো phrase দেখা যায়।"],
+["Compare","“I will finish tomorrow” states a future action. “I will have finished by tomorrow” emphasizes completion before a deadline.","সাধারণ future action আর deadline-এর আগেই শেষ হওয়ার মধ্যে পার্থক্য বুঝো।"]
+],q:"By 6 pm, we ___ the project.",o:["finish yesterday","will have finished","are finish","finished tomorrow"],a:1,why:"Future perfect is will have + past participle."
+},
+{
+title:"Future Perfect Continuous",level:"Advanced",emoji:"📆",
+desc:"Emphasize the duration of an activity up to a future time.",
+sections:[
+["Form","Subject + will have been + verb-ing: “By June, I will have been working here for a year.”","ভবিষ্যতের নির্দিষ্ট সময় পর্যন্ত কাজটি কতক্ষণ ধরে চলবে তা বোঝায়।"],
+["Duration expressions","“By noon, she will have been studying for three hours.”","For + duration প্রায়ই ব্যবহৃত হয়।"],
+["Usage","This tense is less common in everyday speech, but it is useful when duration is important.","দৈনন্দিন কথায় কম দেখা গেলেও formal grammar-এ এটি গুরুত্বপূর্ণ।"]
+],q:"By noon, he ___ for five hours.",o:["will have been working","works yesterday","has work","will working"],a:0,why:"Will have been working emphasizes duration up to a future point."
+},
+{
+title:"Modal Verbs",level:"Intermediate",emoji:"💡",
+desc:"Express ability, advice, possibility and obligation.",
+sections:[
+["Common modals","Can/could: ability or possibility. May/might: possibility. Should: advice. Must: strong obligation. Would: polite requests or hypothetical situations.","Modal দিয়ে ability, advice, possibility, permission বা obligation বোঝানো হয়।"],
+["Grammar rule","Modal + base verb: “She can swim.” “You should practise.”","Modal-এর পরে সাধারণত base verb বসে; “He can swims” ভুল।"],
+["Meaning","“You should rest” gives advice. “You must wear a seat belt” expresses strong obligation.","Should পরামর্শ; must জোরালো বাধ্যবাধকতা বোঝায়।"]
+],q:"You ___ practise English every day.",o:["should to","should","must to","can to"],a:1,why:"Use should + base verb, without to."
+},
+{
+title:"Subject–Verb Agreement",level:"Intermediate",emoji:"🤝",
+desc:"Match the verb to the subject.",
+sections:[
+["Basic rule","“She works.” “They work.” In present simple, he/she/it usually takes -s/-es.","Subject singular না plural, তা দেখে verb নির্বাচন করো।"],
+["Indefinite pronouns","Everyone is ready. Each student has a book. Everyone and each are usually singular in standard formal English.","Everyone, somebody, each সাধারণত singular verb নেয়।"],
+["Find the real subject","“The list of names is long.” The subject is list, not names.","Verb-এর ঠিক আগের noun নয়, আসল subject খুঁজে বের করো।"]
+],q:"Choose the correct sentence.",o:["Everyone are ready.","The list of names is long.","She work daily.","There is two books."],a:1,why:"List is singular, so it takes is."
+},
+{
+title:"Active and Passive Voice",level:"Intermediate",emoji:"🔁",
+desc:"Change the focus from the doer to the receiver.",
+sections:[
+["Difference","Active: “The chef cooked the meal.” Passive: “The meal was cooked by the chef.”","Active-এ কর্তা গুরুত্বপূর্ণ; passive-এ কাজের receiver-কে গুরুত্ব দেওয়া হয়।"],
+["Formation","Move the object into subject position. Use the correct form of be + past participle (V3).","Object-কে সামনে আনো, tense অনুযায়ী be বসাও এবং verb-এর V3 ব্যবহার করো।"],
+["Examples","Present: Cars are made here. Past: The bridge was built in 2000. The by-phrase can be omitted when the doer is unknown or unimportant.","সব tense-এ be-এর form বদলায়; মূল verb-এর V3 থাকে।"]
+],q:"Passive: “They clean the room every day.”",o:["The room cleaned.","The room is cleaned every day.","The room was clean.","The room is cleaning."],a:1,why:"Present simple passive uses am/is/are + V3."
+},
+{
+title:"Direct and Reported Speech",level:"Intermediate",emoji:"🗣️",
+desc:"Report what someone said.",
+sections:[
+["Statements","Direct: He said, “I am tired.” Reported: He said that he was tired.","অন্যের কথা নিজের ভাষায় বলাকে reported speech বলে। Pronoun ও tense context অনুযায়ী বদলাতে পারে।"],
+["Questions","Direct: “Where do you live?” Reported: She asked where I lived. Reported questions normally use statement word order.","Reported question-এ সাধারণত subject আগে, verb পরে আসে।"],
+["Commands","“Close the door.” → He told me to close the door. Negative: He told me not to be late.","Command-এ told/asked + person + to verb ব্যবহার করা যায়।"]
+],q:"She said, “I am busy.”",o:["She said I busy.","She said that she was busy.","She told that busy.","She said she is be busy."],a:1,why:"A typical reported statement changes I to she and am to was."
+},
+{
+title:"Gerunds and Infinitives",level:"Intermediate",emoji:"🧠",
+desc:"Choose verb-ing or to + verb.",
+sections:[
+["Gerunds","A gerund uses verb-ing as a noun: “Swimming is fun.” Common patterns: enjoy reading, avoid making, finish working.","Enjoy, avoid, finish-এর পরে সাধারণত verb-ing আসে।"],
+["Infinitives","To + base verb: “I want to learn.” “She decided to leave.” Common patterns include want to, hope to, plan to.","Want, decide, hope-এর পরে সাধারণত to + base verb বসে।"],
+["Meaning can change","“I stopped smoking” means I quit the habit. “I stopped to smoke” means I stopped another activity in order to smoke.","কিছু verb-এর পরে gerund আর infinitive বদলালে অর্থও বদলে যায়।"]
+],q:"Choose the correct sentence.",o:["I enjoy to read.","I enjoy reading.","I enjoy read.","I enjoying read."],a:1,why:"Enjoy is followed by a gerund."
+},
+{
+title:"Conditionals",level:"Advanced",emoji:"🌦️",
+desc:"Talk about real and imaginary situations.",
+sections:[
+["Zero and first","Zero: If you heat ice, it melts. First: If it rains, we will stay home.","Zero conditional সাধারণ সত্য; first conditional ভবিষ্যতের বাস্তব সম্ভাবনা বোঝায়।"],
+["Second conditional","If + past simple, would + base verb: “If I had time, I would travel.”","বর্তমান বা ভবিষ্যতের কল্পিত বা কম সম্ভাব্য পরিস্থিতি বোঝায়।"],
+["Third conditional","If + past perfect, would have + V3: “If I had studied, I would have passed.”","অতীতে অন্যরকম কিছু হলে কী হতো, তা কল্পনা করতে ব্যবহৃত হয়।"]
+],q:"If I had known, I ___ you.",o:["will tell","would tell","would have told","tell"],a:2,why:"Third conditional uses would have + past participle."
+},
+{
+title:"Relative Clauses",level:"Advanced",emoji:"🧷",
+desc:"Join information using who, which, that and whose.",
+sections:[
+["Defining clauses","“The student who won the prize is my friend.” The clause tells us which student.","কোন ব্যক্তি বা বস্তু বোঝানো হচ্ছে তা নির্দিষ্ট করতে defining clause ব্যবহৃত হয়।"],
+["Relative words","Who: people. Which: things. Whose: possession. Where: places. When: times. That is common in defining clauses.","Who মানুষ, which বস্তু, whose মালিকানা, where স্থান, when সময় বোঝায়।"],
+["Non-defining clauses","“My brother, who lives in Dhaka, is visiting.” Extra information is separated by commas.","অতিরিক্ত তথ্য দেওয়া non-defining clause-এর আগে-পরে comma বসে।"]
+],q:"The woman ___ called you is my teacher.",o:["which","who","where","whose"],a:1,why:"Who refers to a person acting as the subject of the clause."
+},
+{
+title:"Clauses and Phrases",level:"Advanced",emoji:"🧱",
+desc:"Understand the building blocks of complex sentences.",
+sections:[
+["Phrase","A phrase is a group of words that works together but does not contain a complete independent clause: “in the garden.”","Phrase শব্দগুচ্ছ; একা সম্পূর্ণ sentence নাও হতে পারে।"],
+["Independent clause","An independent clause contains a subject and predicate and can stand alone: “She arrived early.”","Independent clause একাই সম্পূর্ণ sentence হতে পারে।"],
+["Dependent clause","A dependent clause cannot normally stand alone: “because she was tired.” Combine it with a main clause: “She slept because she was tired.”","Dependent clause-এর সঙ্গে main clause যোগ করে সম্পূর্ণ বাক্য তৈরি করো।"]
+],q:"Which is a complete independent clause?",o:["Because I was tired","In the morning","She opened the door","Although it rained"],a:2,why:"She opened the door expresses a complete thought."
+},
+{
+title:"Determiners and Quantifiers",level:"Intermediate",emoji:"📦",
+desc:"Use this, those, some, many, much, few and little.",
+sections:[
+["Determiners","A determiner comes before a noun: this book, my phone, each student, the house.","Noun-এর আগে নির্দিষ্টতা বা পরিমাণ বোঝাতে determiner ব্যবহৃত হয়।"],
+["Countable nouns","Use many, a few, few and several with plural countable nouns: many books, a few friends.","Countable plural noun-এর সঙ্গে many, a few ব্যবহার করা যায়।"],
+["Uncountable nouns","Use much, a little, little with uncountable nouns: much water, a little time.","Uncountable noun-এর সঙ্গে much, a little ব্যবহার হয়।"]
+],q:"There isn't ___ milk left.",o:["many","much","few","several"],a:1,why:"Milk is uncountable in this meaning, so much is suitable."
+},
+{
+title:"Comparatives and Superlatives",level:"Intermediate",emoji:"📊",
+desc:"Compare people, objects and experiences.",
+sections:[
+["Comparatives","Short adjectives often use -er: taller, smaller. Longer adjectives often use more: more interesting.","দুইটি জিনিস তুলনা করতে comparative ব্যবহার হয়।"],
+["Superlatives","Short adjectives often use -est: tallest. Longer adjectives often use most: most interesting. Use the with many superlatives.","অনেকের মধ্যে সর্বোচ্চ/সর্বনিম্ন বোঝাতে superlative ব্যবহার হয়।"],
+["Irregular forms","Good → better → best. Bad → worse → worst. Avoid double forms such as “more better.”","Good/bad-এর comparative ও superlative আলাদা করে মনে রাখো।"]
+],q:"This is ___ book I have ever read.",o:["more good","the best","best than","the better"],a:1,why:"Best is the superlative form of good."
+},
+{
+title:"Question Forms",level:"Beginner",emoji:"❓",
+desc:"Ask yes/no and information questions correctly.",
+sections:[
+["Yes/no questions","Are you ready? Do you like tea? Can she swim? Auxiliary verbs often come before the subject.","Yes/no question-এ auxiliary verb subject-এর আগে আসে।"],
+["Wh- questions","Who, what, where, when, why and how ask for information: “Where do you live?”","Wh-word দিয়ে নির্দিষ্ট তথ্য জানতে চাওয়া হয়।"],
+["Do-support","Use do/does/did with many simple present and past questions: “Does she work?” “Did they arrive?”","Do/does/did-এর পরে main verb base form হয়।"]
+],q:"Choose the correct question.",o:["Where you live?","Where do you live?","Where does you live?","Where living you?"],a:1,why:"Present simple questions commonly use do + subject + base verb."
+},
+{
+title:"Negation",level:"Beginner",emoji:"🚫",
+desc:"Make negative statements correctly.",
+sections:[
+["Be verbs","I am not ready. She is not here. They are not busy.","Be verb-এর পরে not বসিয়ে negative করা যায়।"],
+["Do, does and did","I do not know. He does not work here. They did not go.","Simple present ও past-এ auxiliary-এর সাহায্যে negative তৈরি হয়।"],
+["Avoid double negatives","In standard English, use “I don't know anything,” rather than “I don't know nothing.”","Standard English-এ double negative এড়িয়ে চলো।"]
+],q:"Choose the correct sentence.",o:["She don't like tea.","She doesn't like tea.","She doesn't likes tea.","She not like tea."],a:1,why:"Doesn't is followed by the base verb like."
+},
+{
+title:"Punctuation and Capitalization",level:"Beginner",emoji:"✍️",
+desc:"Use capital letters, commas, apostrophes and full stops.",
+sections:[
+["Capitalization","Capitalize the first word of a sentence, I, names, countries, languages, days and months: Bangladesh, English, Friday.","বাক্যের প্রথম শব্দ, I, নাম, দেশ, ভাষা, দিন ও মাসের নাম capital letter দিয়ে শুরু হয়।"],
+["Punctuation marks","Use a full stop for statements, a question mark for direct questions, and commas to separate items or clarify meaning.","Statement-এর শেষে full stop, প্রশ্নের শেষে question mark বসে।"],
+["Apostrophes","It's = it is or it has. Its = belonging to it. You're = you are. Your = belonging to you.","It's আর its; you're আর your-এর পার্থক্য মনে রাখো।"]
+],q:"Choose the correctly capitalized sentence.",o:["my friend lives in bangladesh.","My friend lives in Bangladesh.","My Friend lives in bangladesh","my Friend lives in Bangladesh"],a:1,why:"A sentence begins with a capital and country names are capitalized."
+},
+{
+title:"Common Grammar Mistakes",level:"Intermediate",emoji:"⚠️",
+desc:"Avoid frequent mistakes in everyday English.",
+sections:[
+["Verb agreement","Incorrect: “She go to school.” Correct: “She goes to school.”","He/she/it-এর সঙ্গে present simple-এ verb-এর s/es মনে রাখো।"],
+["Articles and nouns","Incorrect: “an university.” Correct: “a university.” Incorrect: “informations.” Correct: “information.”","Sound অনুযায়ী a/an ব্যবহার করো; uncountable noun অযথা plural কোরো না।"],
+["Natural expressions","Say “interested in,” “good at,” “listen to music” and “married to.”","Preposition-সহ phrase শেখা grammar mistake কমাতে সাহায্য করে।"]
+],q:"Which sentence is correct?",o:["She is good in English.","I listened music.","He gave me some advice.","I have many informations."],a:2,why:"Advice is uncountable; “some advice” is correct."
+},
+{
+title:"Sentence Types",level:"Intermediate",emoji:"🗂️",
+desc:"Identify statements, questions, commands and exclamations.",
+sections:[
+["Declarative","A declarative sentence makes a statement: “The sky is blue.”","Statement বা তথ্য প্রকাশ করে declarative sentence।"],
+["Interrogative and imperative","Question: “Are you ready?” Command/request: “Please sit down.”","প্রশ্নকে interrogative এবং আদেশ/অনুরোধকে imperative বলা হয়।"],
+["Exclamatory","“What a beautiful day!” expresses strong feeling.","জোরালো আবেগ প্রকাশ করতে exclamatory sentence ব্যবহৃত হয়।"]
+],q:"“Please close the window.” is a/an ___ sentence.",o:["interrogative","imperative","exclamatory","conditional"],a:1,why:"It gives a polite instruction or request."
+},
+{
+title:"Simple, Compound and Complex Sentences",level:"Intermediate",emoji:"🏗️",
+desc:"Build sentences with different clause structures.",
+sections:[
+["Simple sentence","A simple sentence has one independent clause: “I studied.”","Simple sentence-এ একটি independent clause থাকে।"],
+["Compound sentence","A compound sentence joins independent clauses: “I studied, and I passed.”","দুইটি independent clause conjunction দিয়ে যুক্ত হতে পারে।"],
+["Complex sentence","A complex sentence combines a main clause with a dependent clause: “I passed because I studied.”","Main clause-এর সঙ্গে dependent clause থাকলে complex sentence হয়।"]
+],q:"“I stayed home because it rained.” is a ___ sentence.",o:["simple","compound","complex","fragment"],a:2,why:"It contains a main clause and a dependent because-clause."
+},
+{
+title:"Subject, Predicate and Objects",level:"Beginner",emoji:"🔍",
+desc:"Identify the core parts of an English sentence.",
+sections:[
+["Subject","The subject tells who or what the sentence is about: “The little boy opened the door.”","Sentence-এ কার বা কিসের কথা বলা হচ্ছে, সেটি subject।"],
+["Predicate","The predicate tells something about the subject and contains the verb: “The little boy opened the door.”","Subject সম্পর্কে যা বলা হয়, সেটি predicate-এর অংশ।"],
+["Object","The object receives the action: “She reads a book.” Book is the object.","Verb-এর কাজ যার ওপর পড়ে, সেটি object হতে পারে।"]
+],q:"In “Rina reads a book,” what is the object?",o:["Rina","reads","a book","the"],a:2,why:"A book receives the action of reading."
+},
+{
+title:"Infinitive of Purpose",level:"Intermediate",emoji:"🎯",
+desc:"Explain why someone does something.",
+sections:[
+["Purpose with to","“I went to the library to study.” The infinitive explains the purpose.","কেন কাজটি করা হলো তা বোঝাতে to + verb ব্যবহার করা যায়।"],
+["In order to","“She saved money in order to buy a laptop.” This can emphasize purpose.","Purpose আরও স্পষ্ট করতে in order to ব্যবহার করা যায়।"],
+["Negative purpose","“He left early so as not to miss the bus.” This is more formal than many everyday alternatives.","কোনো কাজ এড়ানোর উদ্দেশ্য বোঝাতে so as not to ব্যবহার করা যায়।"]
+],q:"I use a dictionary ___ learn new words.",o:["for learn","to","to learning","learn to"],a:1,why:"To + base verb can express purpose: to learn."
+},
+{
+title:"Wish and If Only",level:"Advanced",emoji:"💭",
+desc:"Express wishes about the present, past and future.",
+sections:[
+["Present wishes","“I wish I knew the answer.” Past simple can express a wish for a different present situation.","বর্তমানের অবস্থা অন্যরকম হলে ভালো হতো—এমন ইচ্ছায় past simple ব্যবহার হয়।"],
+["Past regrets","“I wish I had studied harder.” Past perfect expresses regret about the past.","অতীতের বিষয়ে আফসোস বোঝাতে wish + past perfect ব্যবহৃত হয়।"],
+["Complaints and desires","“I wish it would stop raining.” Would can express a desired change, especially when the situation is frustrating.","কোনো পরিস্থিতি বদলানোর ইচ্ছা বা বিরক্তি বোঝাতে wish + would ব্যবহার করা যায়।"]
+],q:"I wish I ___ taller.",o:["am","were","will be","have"],a:1,why:"Were is commonly used for an unreal present wish."
+},
+{
+title:"Causative Verbs",level:"Advanced",emoji:"🛠️",
+desc:"Describe having, getting or making something done.",
+sections:[
+["Have something done","“I had my phone repaired.” This means someone repaired the phone for me.","নিজে না করে অন্য কাউকে দিয়ে কাজ করালে have + object + V3 ব্যবহার করা যায়।"],
+["Get something done","“She got her hair cut.” Get something done is another common causative structure.","Get + object + V3-ও কাউকে দিয়ে কাজ করানোর অর্থে ব্যবহৃত হয়।"],
+["Make and let","“The teacher made us rewrite the answer.” “My parents let me go.” Make can express force; let expresses permission.","Make কাউকে কিছু করতে বাধ্য করা বোঝাতে পারে; let অনুমতি বোঝায়।"]
+],q:"I had my laptop ___.",o:["repair","repaired","repairing by","to repair"],a:1,why:"Have + object + past participle is a causative pattern."
+},
+{
+title:"Parallel Structure",level:"Advanced",emoji:"⚖️",
+desc:"Keep similar items in a list grammatically consistent.",
+sections:[
+["The rule","Use the same grammatical form for items with the same role: “She likes reading, writing and drawing.”","একই তালিকার item-গুলোর grammatical structure একই রাখো।"],
+["With infinitives","“He wants to learn, to practise and to improve.” Repeating to can be optional in some coordinated patterns.","একই structure ধরে রাখলে বাক্য পড়তে সহজ হয়।"],
+["Common mistake","Incorrect: “She likes swimming, to run and cycling.” Better: “She likes swimming, running and cycling.”","একই list-এ gerund, infinitive অকারণে মিশিয়ে ফেলো না।"]
+],q:"Choose the parallel sentence.",o:["He likes swimming, running and cycling.","He likes swim, running and to cycle.","He likes swimming, to run and cycling.","He likes to swim, running and cycle."],a:0,why:"All items use the same -ing form."
+},
+{
+title:"Inversion for Emphasis",level:"Advanced",emoji:"🎓",
+desc:"Use formal word order to emphasize ideas.",
+sections:[
+["Negative adverbials","“Never have I seen such a view.” After certain negative or limiting expressions at the beginning, auxiliary-subject inversion may occur.","Never-এর মতো expression সামনে এলে formal English-এ auxiliary subject-এর আগে আসতে পারে।"],
+["Not only","“Not only did she win, but she also set a record.”","Not only সামনে এলে did/does-এর মতো auxiliary লাগতে পারে।"],
+["Use carefully","Inversion is common in formal, literary or emphatic writing. Normal word order remains more common in everyday English.","Inversion formal বা emphatic writing-এ ব্যবহার করো; সাধারণ বাক্যে normal order বজায় রাখো।"]
+],q:"Choose the correct formal sentence.",o:["Never I have seen that.","Never have I seen that.","Never seen I have that.","Never I saw have that."],a:1,why:"The negative adverb Never triggers inversion: have + subject."
+}
+];
+
+// Add extra syllabus areas to make the course roadmap broader.
+// These topics have their own explanation and quiz content too.
+const extraLessons = [
+["Word Formation","Intermediate","🧬","Learn prefixes, suffixes and word families.","Prefixes change meaning: unhappy, rewrite. Suffixes can change word class: happy → happiness, teach → teacher.","Prefix শব্দের শুরুতে, suffix শেষে বসে। এগুলো meaning বা word class বদলাতে পারে।","The prefix “un-” in unhappy usually means…",["not","again","before","small"],0,"Un- commonly makes a word negative."],
+["Countable and Uncountable Nouns","Beginner","🍎","Choose correct quantities and noun forms.","Countable nouns can be counted: one apple, two apples. Uncountable nouns include water, advice and information.","Countable noun গোনা যায়; uncountable noun সাধারণত সরাসরি plural হয় না।","Choose the correct phrase.",["many water","an advice","a piece of information","two informations"],2,"A piece of information is a correct countable expression."],
+["Articles with Places and Names","Intermediate","🌍","Understand common article patterns with geographical names.","We usually say Bangladesh, Dhaka, Mount Everest, but the United States, the Netherlands, the Bay of Bengal.","অনেক দেশ ও শহরের আগে article লাগে না; কিছু country বা geographical name-এর আগে the লাগে।","Choose the correct phrase.",["the Bangladesh","the Dhaka","the United States","a Mount Everest"],2,"The United States conventionally takes the."],
+["Prepositional Phrases","Intermediate","🧭","Learn useful multiword expressions.","Examples: in front of, because of, according to, in spite of, on behalf of.","Preposition-সহ phrase একসঙ্গে শিখলে natural English বলা সহজ হয়।","___ the rain, we continued the match.",["Despite of","In spite of","Although of","Because"],1,"In spite of is followed by a noun or noun phrase."],
+["Question Tags","Intermediate","🏷️","Add short confirmation questions to statements.","Positive statement + negative tag: “You are ready, aren't you?” Negative statement + positive tag: “She isn't here, is she?”","Positive statement-এর পরে সাধারণত negative tag; negative statement-এর পরে positive tag হয়।","You are ready, ___?",["are you","aren't you","do you","isn't it"],1,"The tag repeats the auxiliary with the opposite polarity."],
+["Indirect Questions","Intermediate","🗨️","Ask questions more politely.","Direct: “Where is the station?” Indirect: “Could you tell me where the station is?” Keep statement word order after the question phrase.","Indirect question-এ question phrase-এর পরে statement word order হয়।","Which is correct?",["Could you tell me where is it?","Could you tell me where it is?","Could tell where is it?","Could you where it is tell?"],1,"Indirect questions normally use subject + verb order."],
+["Ellipsis and Substitution","Advanced","✂️","Avoid unnecessary repetition in conversation.","“I can play guitar, and my brother can too.” “I prefer the blue one.” Words such as one, do and so can replace repeated information.","একই কথা বারবার না বলে one, do, so ইত্যাদি দিয়ে repetition কমানো যায়।","I like the red shirt, not the blue ___.",["ones","one","it are","shirt one"],1,"One can replace a singular countable noun."],
+["Formal and Informal English","Intermediate","🎩","Choose grammar and expressions for the context.","Formal: “I would appreciate your reply.” Informal: “Please get back to me.” Avoid slang in formal applications and academic writing.","কাকে, কোথায় লিখছ তার ওপর language-এর formality নির্ভর করে।","Which is more suitable for a formal email?",["Yo, reply fast!","I would appreciate your response.","What's up, boss?","Gimme the answer."],1,"This is polite and suitable for a formal email."],
+["Common Irregular Verbs","Beginner","📖","Learn base, past and past participle forms.","Go–went–gone; see–saw–seen; write–wrote–written; take–took–taken; speak–spoke–spoken.","Irregular verb-এর V1, V2, V3 নিয়মিত ed দিয়ে তৈরি হয় না; আলাদা করে অনুশীলন করো।","Choose the correct forms.",["go–goed–goed","go–went–gone","go–gone–went","go–going–gone"],1,"Go–went–gone are the standard forms."],
+["Commonly Confused Words","Intermediate","🧠","Distinguish words that look or sound similar.","Their = belonging to them; there = a place; they're = they are. Your = belonging to you; you're = you are.","শব্দের spelling ও grammatical role খেয়াল করো: their, there, they're আলাদা।","Choose the correct sentence.",["Their going home.","They're going home.","There going home.","Theyre going home."],1,"They're is the contraction of they are."],
+["Adjective Clauses and Adverb Clauses","Advanced","🧩","Use dependent clauses to add description or circumstances.","Adjective clause: “The book that I bought is useful.” Adverb clause: “I left because I was tired.”","Adjective clause noun-কে describe করে; adverb clause reason, time, condition ইত্যাদি বোঝাতে পারে।","“I left because I was tired” contains a clause of…",["reason","possession","comparison only","naming"],0,"Because I was tired explains the reason."],
+["Transformation: Too / Enough","Intermediate","🔄","Express limits and ability with too and enough.","“The box is too heavy to lift.” “She is old enough to vote.” Too often indicates excess; enough indicates sufficiency.","Too = প্রয়োজনের চেয়ে বেশি; enough = যথেষ্ট।","He is ___ young to drive.",["enough","too","so enough","much enough"],1,"Too young means not old enough."],
+["Transformation: Although / Despite","Advanced","🔀","Express contrast using clauses and noun phrases.","Although it rained, we played. Despite the rain, we played. Although is followed by a clause; despite is followed by a noun phrase or gerund.","Although-এর পরে clause; despite-এর পরে noun phrase বা gerund আসে।","Choose the correct phrase.",["Despite it was raining","Although the rain","Despite the rain","Although of the rain"],2,"Despite the rain is grammatically correct."],
+["Transformation: Direct to Indirect","Intermediate","🗣️","Practise changing statements, questions and commands.","Statement: He said, “I am ill.” → He said he was ill. Question: She asked, “Are you ready?” → She asked whether I was ready.","Tense, pronoun এবং time expression context অনুযায়ী বদলাতে পারে।","He asked me, “Are you ready?”",["He asked me was I ready.","He asked whether I was ready.","He said I ready.","He asked that am I ready."],1,"Reported yes/no questions can use whether or if."],
+["Transformation: Active to Passive","Intermediate","🔁","Practise passive forms across common tenses.","Present: They make cars → Cars are made. Past: They built a bridge → A bridge was built. Present perfect: They have finished it → It has been finished.","Tense অনুযায়ী be-এর form বদলায়, কিন্তু main verb V3 হয়।","“They have completed the work.”",["The work has completed.","The work has been completed.","The work is completing.","The work was complete yesterday."],1,"Present perfect passive = has/have been + V3."],
+["Parallelism and Clear Writing","Advanced","📝","Write balanced sentences and avoid run-ons.","Use matching forms in lists. Join independent clauses with appropriate punctuation or conjunctions. Avoid joining unrelated sentences with only a comma.","একই ধরনের structure ব্যবহার করো; comma splice এবং run-on sentence এড়িয়ে চলো।","Choose the clearest sentence.",["I woke up, I ate, I left.","I woke up, ate breakfast, and left.","I waking, ate and left.","I woke up and eating and left."],1,"The coordinated verbs share a consistent structure."]
+];
+
+extraLessons.forEach(item => {
+  lessons.push({
+    title:item[0], level:item[1], emoji:item[2], desc:item[3],
+    sections:[
+      ["Core concept",item[4],item[5]],
+      ["Learn the pattern","Read the examples carefully, then write two original sentences using the same structure.", "নিজের জীবনের সঙ্গে সম্পর্কিত দুটি sentence তৈরি করে practice করো।"],
+      ["Practice tip","Notice the grammatical pattern in books, articles and everyday conversations. Keep a notebook of examples.", "নতুন pattern দেখলে notebook-এ example লিখে রাখো।"]
+    ],
+    q:item[6], o:item[7], a:item[8], why:item[9]
+  });
+});
+
+// More short revision topics to make the syllabus 60 lessons.
+const revisionTopics = [
+["There Is / There Are","Beginner","🏠","Describe what exists in a place.","There is + singular noun. There are + plural noun. “There is a book.” “There are two books.”","একটি হলে there is, একাধিক হলে there are।","___ two chairs in the room.",["There is","There are","It are","There has"],1,"Two chairs is plural."],
+["Much / Many / A Lot Of","Beginner","📏","Talk about quantity.","Many is used with plural countable nouns; much with uncountable nouns. A lot of can be used with both.","Many + countable plural; much + uncountable noun।","How ___ books do you have?",["much","many","little","any of"],1,"Books are countable plural nouns."],
+["Few / A Few / Little / A Little","Intermediate","🥛","Express small quantities accurately.","Few suggests not many, often negatively. A few means some. Little suggests not much; a little means some amount.","Few/little-এর অর্থ প্রায় নেই; a few/a little-এর অর্থ কিছু আছে।","I have ___ friends who can help me.",["a few","a little","much","any"],0,"Friends are countable, so a few is appropriate."],
+["Used To","Intermediate","⏳","Describe past habits or past states.","“I used to play football.” It describes a past habit or state that is no longer true or is no longer regular.","আগের অভ্যাস বা অবস্থা বোঝাতে used to ব্যবহার হয়।","I ___ walk to school when I was young.",["use to","used to","am used","using to"],1,"Used to describes a past habit."],
+["Be Used To / Get Used To","Advanced","🔧","Talk about familiarity and becoming accustomed to something.","“I am used to waking up early.” “I am getting used to the new schedule.” Be used to describes familiarity; get used to describes the process.","Be used to = অভ্যস্ত; get used to = অভ্যস্ত হয়ে ওঠা।","I am used to ___ early.",["wake","waking","woke","to waking up always"],1,"In this pattern, to is a preposition and is followed by a noun or gerund."],
+["So / Such","Intermediate","💬","Emphasize adjectives, adverbs and noun phrases.","So + adjective/adverb: so beautiful. Such + (a/an) + adjective + noun: such a beautiful day.","So-এর পরে adjective/adverb; such-এর পরে noun phrase ব্যবহৃত হয়।","It was ___ a beautiful day.",["so","such","such as","so that"],1,"Such a beautiful day is the correct structure."],
+["As...As Comparisons","Intermediate","⚖️","Compare equal or unequal qualities.","“She is as tall as her brother.” “This task is not as difficult as that one.”","সমান তুলনায় as + adjective + as ব্যবহার হয়।","My bag is as heavy ___ yours.",["than","as","like","from"],1,"The pattern is as ... as."],
+["Unless","Advanced","🚦","Express a negative condition.","Unless often means “if not”: “Unless you hurry, you will miss the bus.” Avoid adding another not when it makes the meaning incorrect.","Unless অনেক সময় if not-এর অর্থ দেয়।","___ you hurry, you will miss the bus.",["Unless","Because","Although of","Despite"],0,"Unless introduces a condition meaning if you do not hurry."],
+["Although / Though / Even Though","Intermediate","🌧️","Show contrast between two ideas.","“Although it was late, we continued.” Though is similar. Even though often emphasizes the contrast.","যদিও অর্থে although, though, even though ব্যবহার হয়।","___ it was raining, we went out.",["Despite","Although","In spite","Because of"],1,"Although is followed by a clause."],
+["Because / Because Of","Intermediate","🔍","Give reasons with clauses or noun phrases.","Because + subject and verb: “because it rained.” Because of + noun phrase: “because of the rain.”","Because-এর পরে clause; because of-এর পরে noun phrase আসে।","The match stopped ___ the rain.",["because","because of","although","despite of"],1,"The rain is a noun phrase."],
+["Wish + Past Perfect","Advanced","💭","Express regret about a past event.","“I wish I had studied harder.” This expresses regret about something that happened or did not happen in the past.","অতীতের ঘটনা নিয়ে আফসোস করতে wish + past perfect ব্যবহার হয়।","I wish I ___ earlier.",["leave","left tomorrow","had left","will leave"],2,"Had left expresses a regret about the past."],
+["Mixed Conditionals","Advanced","🧠","Connect a past condition to a present result.","“If I had studied medicine, I would be a doctor now.” The condition is in the past; the result relates to the present.","অতীতের condition-এর বর্তমান ফল বোঝাতে mixed conditional ব্যবহার হতে পারে।","If I had taken the job, I ___ there now.",["would work","will work","worked yesterday","would have worked tomorrow"],0,"The result refers to the present: would work there now."],
+["Reported Questions","Intermediate","🗨️","Report questions without direct question word order.","“Where are you?” → He asked where I was. “Do you like tea?” → She asked if I liked tea.","Reported question-এ সাধারণত subject + verb order থাকে।","He asked me where I ___.",["did live?","lived","do live?","was live"],1,"Indirect questions use statement word order."],
+["Reported Commands and Requests","Intermediate","📣","Report instructions and requests.","“Sit down.” → She told me to sit down. “Please don't be late.” → He asked me not to be late.","Told/asked + person + to verb; negative command-এ not to verb ব্যবহার করা যায়।","The teacher told us ___ quietly.",["sit","to sit","sitting","sat"],1,"Told + person + to-infinitive."],
+["Possessives and Apostrophes","Beginner","🔑","Show ownership and contractions.","Rafi's book; the students' room; it's raining; its colour is blue. Apostrophe placement depends on singular or plural possession.","Singular possession: student's; plural s-ending: students'।","The books belonging to the students are the ___.",["student's","students'","students","student"],1,"Students' marks plural possession."],
+["Articles in General Statements","Intermediate","🌎","Choose articles for general and specific meanings.","“Cats are independent animals.” General plural: no article. “The cats outside are hungry.” Specific cats: the.","General plural noun-এ article না-ও লাগে; নির্দিষ্ট group হলে the ব্যবহার হয়।","___ dogs are loyal animals. (general meaning)",["A","The","No article","An"],2,"General plural nouns commonly use no article."],
+["Relative Pronouns: Whose / Where / When","Advanced","🧷","Add information about possession, place and time.","“The girl whose bag was lost...” “The house where I grew up...” “The day when we met...”","Whose = যার; where = যেখানে; when = যখন।","The person ___ car was stolen called the police.",["who","whose","where","when"],1,"Whose expresses possession."],
+["Adjective + Preposition","Intermediate","📚","Learn common adjective-preposition combinations.","Afraid of, proud of, interested in, responsible for, famous for, similar to.","Adjective-এর সঙ্গে নির্দিষ্ট preposition মনে রাখো।","She is interested ___ programming.",["on","in","at","for"],1,"Interested in is the standard combination."],
+["Verb + Preposition","Intermediate","🔗","Learn common verb-preposition patterns.","Listen to, depend on, wait for, belong to, apply for, agree with.","Verb-এর পরে সঠিক preposition শেখা জরুরি।","I am waiting ___ the bus.",["to","for","on","at"],1,"Wait for is the correct combination here."],
+["Phrasal Verbs","Intermediate","🛠️","Understand verbs combined with particles.","Give up = stop trying; find out = discover; look after = take care of; put off = postpone.","Phrasal verb-এর meaning অনেক সময় আলাদা হয়, তাই phrase হিসেবে শিখো।","“Give up” usually means…",["continue","stop trying","discover","look after"],1,"Give up means to stop trying or quit."],
+["Collocations","Advanced","🧠","Use words that naturally go together.","Make a decision, do homework, heavy rain, strong coffee, take a break.","কিছু শব্দ স্বাভাবিকভাবে একসঙ্গে ব্যবহৃত হয়; এগুলো collocation।","Choose the natural collocation.",["do a decision","make a decision","create homework","make a rain"],1,"Make a decision is the standard collocation."],
+["Question Word Order with Who","Advanced","❓","Understand questions where who is the subject or object.","Subject question: “Who called you?” Object question: “Who did you call?” Subject questions often do not use do-support.","Who কাজটি করলে do-support সাধারণত লাগে না: Who called? কিন্তু object question: Who did you call?","___ called you last night?",["Who did","Who","Whom did the phone","Who does"],1,"Who is the subject, so no do-support is needed."],
+["Sentence Fragments and Run-ons","Advanced","📝","Recognize incomplete sentences and run-on sentences.","Fragment: “Because I was tired.” Run-on: “I was tired I went home.” Better: “Because I was tired, I went home.”","অসম্পূর্ণ clause আর punctuation ছাড়া জোড়া sentence এড়িয়ে চলো।","Which is a complete sentence?",["Because I was tired.","When the bell rang.","I went home because I was tired.","Although the rain."],2,"It contains a main clause and a dependent clause."],
+["Formal Modals: Would / Could / May","Advanced","🎩","Make polite requests and formal suggestions.","“Could you help me?” “May I come in?” “Would you mind opening the window?”","Could, would, may অনেক পরিস্থিতিতে polite request করতে সাহায্য করে।","Which is a polite request?",["Give it now!","Could you help me, please?","You help me now.","Help me, will you always."],1,"Could you... please? is a polite request."],
+["Common Sentence Transformations","Advanced","🔄","Practise changing structures without changing meaning.","Active/passive, direct/reported speech, too/enough, although/despite and comparative structures are common transformation areas.","অর্থ একই রেখে বাক্যের structure বদলানোই sentence transformation-এর লক্ষ্য।","“The box is too heavy to lift” means…",["The box is easy to lift.","The box is so heavy that it cannot be lifted easily.","The box weighs nothing.","The box is light enough."],1,"Too heavy expresses excessive weight for the action."],
+["Editing and Proofreading","Advanced","🔎","Find and correct grammar errors in writing.","Check subject-verb agreement, tense consistency, articles, pronouns, punctuation and sentence completeness. Read the sentence aloud after editing.","লেখা শেষে tense, subject-verb agreement, article, pronoun ও punctuation check করো।","Which sentence is correct?",["She have two brothers.","He doesn't likes tea.","They were waiting for the bus.","I am agree with you."],2,"They were waiting is grammatically correct."],
+["Grammar in Emails and Applications","Intermediate","✉️","Use clear and polite grammar in practical writing.","Use complete sentences, polite requests and consistent tense. Example: “I am writing to apply for the internship.”","Email বা application-এ complete sentence ও polite expression ব্যবহার করো।","Choose the more formal sentence.",["Hey give me internship.","I am writing to apply for the internship.","Yo, hire me.","Gimme a job."],1,"This is clear and appropriate for a formal application."],
+["Grammar for Speaking","Intermediate","🗣️","Use natural grammar in everyday conversations.","Practise short answers, question forms, contractions and common phrases. Example: “I've finished,” “Do you mind?” “What do you mean?”","Speaking-এর জন্য ছোট sentence, question form ও common expression জোরে practice করো।","Choose the natural question.",["What you mean?","What do you mean?","What does you mean?","What are mean you?"],1,"What do you mean? is the standard question."],
+["Final Grammar Review","Advanced","🏆","Review core grammar skills in one place.","Check word classes, articles, tense forms, subject-verb agreement, clauses, conditionals, voice and reported speech. Review mistakes rather than memorizing only scores.","শেষে দুর্বল topic-গুলো আবার পড়ো এবং নিজের sentence তৈরি করো।","Choose the correct sentence.",["She don't know.","If I had known, I would have helped.","He can to swim.","They was ready."],1,"This is a correct third conditional sentence."]
+];
+
+revisionTopics.forEach(item => {
+  lessons.push({
+    title:item[0], level:item[1], emoji:item[2], desc:item[3],
+    sections:[
+      ["Core concept",item[4],item[5]],
+      ["Examples and usage","Read the pattern aloud and write two original sentences. Compare your sentences with the examples above.","নিজের sentence বানিয়ে practice করো।"],
+      ["Learning tip","Return to this topic later and try the quiz again after reviewing the explanation.","কয়েক দিন পর আবার quiz দিলে মনে রাখতে সুবিধা হবে।"]
+    ],
+    q:item[6],o:item[7],a:item[8],why:item[9]
+  });
+});
+
+let completed = new Set();
+let bestScore = 0;
+let current = null;
+let quizAnswered = false;
+let practiceIndex = 0;
+let practiceScore = 0;
+let practiceDone = false;
+
+try {
+  completed = new Set(JSON.parse(localStorage.getItem("gp-completed") || "[]"));
+  bestScore = Number(localStorage.getItem("gp-best") || 0);
+} catch (error) {
+  completed = new Set();
+  bestScore = 0;
+}
+
+const $ = selector => document.querySelector(selector);
+const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[char]));
+
+function saveProgress() {
+  try {
+    localStorage.setItem("gp-completed", JSON.stringify([...completed]));
+    localStorage.setItem("gp-best", String(bestScore));
+  } catch (error) {
+    console.warn("Progress could not be saved in this browser.");
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = completed.size;
+  const percent = Math.round(count / lessons.length * 100);
+  $("#homeCompleted").textContent = count;
+  $("#homeTotal").textContent = lessons.length;
+  $("#homePercent").textContent = percent + "%";
+  $("#progressCount").textContent = count;
+  $("#progressPercent").textContent = percent + "%";
+  $("#bestScore").textContent = bestScore + "/10";
+  $("#sideCount").textContent = count + " lessons completed";
+  $("#sidePercent").textContent = percent + "% complete";
+  $("#sideFill").style.width = percent + "%";
+  $("#bigFill").style.width = percent + "%";
+  $("#progressText").textContent = count === lessons.length
+    ? "Congratulations! You have completed the entire syllabus."
+    : `You have completed ${count} of ${lessons.length} lessons. Keep going!`;
+
+  $("#completedList").innerHTML = lessons
+    .map((lesson,index) => ({lesson,index}))
+    .filter(item => completed.has(item.index))
+    .map(item => lessonCard(item.lesson,item.index))
+    .join("") || '<div class="lesson-box">No lessons completed yet. Start your first lesson!</div>';
+}
+
+function lessonCard(lesson,index) {
+  const done = completed.has(index);
+  return `
+    <div class="lesson-item">
+      <div class="lesson-number">${done ? "✓" : String(index+1).padStart(2,"0")}</div>
+      <div class="lesson-info">
+        <h3>${lesson.emoji} ${escapeHTML(lesson.title)}</h3>
+        <p>${escapeHTML(lesson.desc)}</p>
+        <div class="meta"><span class="tag">${lesson.level}</span><span>${done ? "Completed" : "Study + quiz"}</span></div>
+        <button onclick="openLesson(${index})">${done ? "Review lesson" : "Start lesson"} →</button>
+      </div>
+    </div>`;
+}
+
+function topicCard(lesson,index) {
+  return `
+    <div class="card" onclick="openLesson(${index})">
+      <div class="emoji">${lesson.emoji}</div>
+      <h3>${escapeHTML(lesson.title)}</h3>
+      <p>${escapeHTML(lesson.desc)}</p>
+      <div class="meta"><span class="tag">${lesson.level}</span><span>${completed.has(index) ? "✓ Completed" : "Open lesson →"}</span></div>
+    </div>`;
+}
+
+function renderLessons() {
+  const query = $("#search").value.toLowerCase().trim();
+  const level = $("#level").value;
+  const status = $("#status").value;
+
+  const filtered = lessons
+    .map((lesson,index) => ({lesson,index}))
+    .filter(({lesson,index}) => {
+      const text = (lesson.title + " " + lesson.desc + " " + lesson.level).toLowerCase();
+      const levelMatch = level === "All" || lesson.level === level;
+      const statusMatch = status === "All" ||
+        (status === "Complete" ? completed.has(index) : !completed.has(index));
+      return text.includes(query) && levelMatch && statusMatch;
+    });
+
+  $("#lessonList").innerHTML = filtered.map(({lesson,index}) => lessonCard(lesson,index)).join("")
+    || '<div class="lesson-box">No lessons found. Try another search.</div>';
+}
+
+function filterLevel(level) {
+  showView("lessons");
+  $("#level").value = level;
+  renderLessons();
+}
+
+function showView(name) {
+  document.querySelectorAll(".view").forEach(view => {
+    view.classList.toggle("active", view.id === "view-" + name);
+  });
+  document.querySelectorAll("[data-view]").forEach(button => {
+    button.classList.toggle("active", button.dataset.view === name);
+  });
+  if (name === "lessons") renderLessons();
+  if (name === "progress") updateProgress();
+  if (name === "practice") startPractice();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.querySelectorAll("[data-view]").forEach(button => {
+  button.addEventListener("click", () => showView(button.dataset.view));
+});
+
+function openLesson(index) {
+  current = index;
+  quizAnswered = false;
+  renderDetail();
+  showView("detail");
+}
+
+function renderDetail() {
+  const lesson = lessons[current];
+  const done = completed.has(current);
+
+  $("#detail").innerHTML = `
+    <div class="lesson-header">
+      <span class="tag">${lesson.level}</span>
+      <h1>${lesson.emoji} ${escapeHTML(lesson.title)}</h1>
+      <p>${escapeHTML(lesson.desc)}</p>
+      <p class="muted">Lesson ${current+1} of ${lessons.length}</p>
+      ${done ? '<strong class="correct">✓ Lesson completed</strong>' : ""}
+    </div>
+
+    ${lesson.sections.map((section,index) => `
+      <article class="lesson-box">
+        <h2>${index+1}. ${escapeHTML(section[0])}</h2>
+        <p>${section[1]}</p>
+        <div class="bangla"><strong>সহজ বাংলায় বুঝি</strong><br>${escapeHTML(section[2])}</div>
+      </article>
+    `).join("")}
+
+    <article class="lesson-box">
+      <h2>🧠 Quick quiz</h2>
+      <p>${escapeHTML(lesson.q)}</p>
+      <div id="lessonOptions">
+        ${lesson.o.map((option,index) => `
+          <button class="quiz-option" onclick="answerLesson(${index})">
+            ${String.fromCharCode(65+index)}. ${escapeHTML(option)}
+          </button>
+        `).join("")}
+      </div>
+      <div id="lessonFeedback" class="feedback" aria-live="polite"></div>
+    </article>
+
+    <div class="actions">
+      <button class="btn" onclick="markComplete(${current})">
+        ${done ? "✓ Completed" : "Mark as completed"}
+      </button>
+      <button class="secondary" onclick="openLesson(${(current+1)%lessons.length})">
+        Next lesson →
+      </button>
+    </div>
+    <p class="muted">Study tip: Read the explanation, say the examples aloud and create two sentences of your own.</p>
+  `;
+}
+
+function answerLesson(selected) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const lesson = lessons[current];
+
+  document.querySelectorAll("#lessonOptions button").forEach((button,index) => {
+    button.disabled = true;
+    if (index === lesson.a) {
+      button.style.borderColor = "#0d956a";
+      button.style.background = "#e8fff5";
+    } else if (index === selected) {
+      button.style.borderColor = "#d94155";
+      button.style.background = "#fff0f2";
+    }
+  });
+
+  const correct = selected === lesson.a;
+  $("#lessonFeedback").innerHTML =
+    `<span class="${correct ? "correct" : "wrong"}">${correct ? "Correct! 🎉" : "Not quite."}</span> ${escapeHTML(lesson.why)}`;
+}
+
+function markComplete(index) {
+  completed.add(index);
+  saveProgress();
+  renderDetail();
+  renderLessons();
+  $("#featured").innerHTML = lessons.slice(0,6).map(topicCard).join("");
+}
+
+const practiceQuestions = [
+  {q:"She ___ to school every day.",o:["go","goes","going","gone"],a:1,e:"Present simple: she goes."},
+  {q:"I have lived here ___ 2020.",o:["for","since","during","at"],a:1,e:"Since is used with a starting point."},
+  {q:"If I had known, I ___ you.",o:["will tell","would tell","would have told","told"],a:2,e:"Third conditional: would have + V3."},
+  {q:"The room ___ every day.",o:["cleans","is cleaned","cleaning","was clean yesterday"],a:1,e:"Present simple passive: is cleaned."},
+  {q:"I enjoy ___ books.",o:["read","to read","reading","reads"],a:2,e:"Enjoy is followed by a gerund."},
+  {q:"Everyone ___ ready.",o:["are","is","were","be"],a:1,e:"Everyone is usually treated as singular."},
+  {q:"She is interested ___ science.",o:["on","in","at","for"],a:1,e:"The correct collocation is interested in."},
+  {q:"He asked me where I ___.",o:["live?","did live?","lived","am live"],a:2,e:"Indirect questions use statement word order."},
+  {q:"There isn't ___ water left.",o:["many","much","few","several"],a:1,e:"Much is used with uncountable nouns."},
+  {q:"By Friday, I ___ the work.",o:["finish yesterday","will have finished","am finish","finished tomorrow"],a:1,e:"Future perfect describes completion before a future deadline."}
+];
+
+function startPractice() {
+  practiceIndex = 0;
+  practiceScore = 0;
+  practiceDone = false;
+  drawPractice();
+}
+
+function drawPractice() {
+  const box = $("#practiceBox");
+
+  if (practiceIndex >= practiceQuestions.length) {
+    practiceDone = true;
+    if (practiceScore > bestScore) {
+      bestScore = practiceScore;
+      saveProgress();
+    }
+    box.innerHTML = `
+      <div style="text-align:center;padding:20px">
+        <div style="font-size:48px">🎉</div>
+        <h2>Quiz complete!</h2>
+        <p>You scored <strong>${practiceScore}/10</strong>.</p>
+        <p class="muted">Best score: ${bestScore}/10</p>
+        <button class="btn" onclick="startPractice()">Try again</button>
+        <button class="secondary" onclick="showView('lessons')">Review lessons</button>
+      </div>`;
+    return;
+  }
+
+  const question = practiceQuestions[practiceIndex];
+  box.innerHTML = `
+    <div class="meta"><span class="tag">QUESTION ${practiceIndex+1} / 10</span><span>Score: ${practiceScore}</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:${practiceIndex*10}%"></div></div>
+    <h2 style="margin-top:24px">${escapeHTML(question.q)}</h2>
+    <div id="practiceOptions">
+      ${question.o.map((option,index) => `
+        <button class="quiz-option" onclick="answerPractice(${index})">
+          ${String.fromCharCode(65+index)}. ${escapeHTML(option)}
+        </button>
+      `).join("")}
+    </div>
+    <div id="practiceFeedback" class="feedback" aria-live="polite"></div>
+    <button id="practiceNext" class="btn" style="display:none" onclick="nextPractice()">
+      ${practiceIndex === practiceQuestions.length-1 ? "See results" : "Next question →"}
+    </button>`;
+}
+
+function answerPractice(selected) {
+  if (practiceDone) return;
+  const question = practiceQuestions[practiceIndex];
+  if ($("#practiceNext").style.display !== "none") return;
+
+  if (selected === question.a) practiceScore++;
+
+  document.querySelectorAll("#practiceOptions button").forEach((button,index) => {
+    button.disabled = true;
+    if (index === question.a) {
+      button.style.borderColor = "#0d956a";
+      button.style.background = "#e8fff5";
+    } else if (index === selected) {
+      button.style.borderColor = "#d94155";
+      button.style.background = "#fff0f2";
+    }
+  });
+
+  $("#practiceFeedback").textContent =
+    (selected === question.a ? "Correct! " : "Not quite. ") + question.e;
+  $("#practiceNext").style.display = "inline-block";
+}
+
+function nextPractice() {
+  practiceIndex++;
+  drawPractice();
+}
+
+function resetProgress() {
+  if (!confirm("Clear all completed lessons and the saved best quiz score on this device?")) return;
+  completed.clear();
+  bestScore = 0;
+  saveProgress();
+  renderLessons();
+  $("#featured").innerHTML = lessons.slice(0,6).map(topicCard).join("");
+  if (current !== null) renderDetail();
+}
+
+// Search and filters
+$("#search").addEventListener("input", renderLessons);
+$("#level").addEventListener("change", renderLessons);
+$("#status").addEventListener("change", renderLessons);
+
+// Initialize the application
+$("#featured").innerHTML = lessons.slice(0,6).map(topicCard).join("");
+renderLessons();
+updateProgress();
+</script>
+</body>
+</html>
